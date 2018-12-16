@@ -2,7 +2,7 @@
 ### Escuela Colombiana de Ingeniería
 
 ### Arquitecturas de Software – ARSW
-## Laboratorio - Programación concurrente, condiciones de carrera, esquemas de sincronización, colecciones sincronizadas y concurrentes
+## Laboratorio Programación concurrente, condiciones de carrera, esquemas de sincronización, colecciones sincronizadas y concurrentes - Caso Dogs Race
 
 ### Descripción:
 Este ejercicio tiene como fin que el estudiante conozca y aplique conceptos propios de la programación concurrente.
@@ -38,7 +38,7 @@ logre tomar el ‘1’ será el ganador.
 
 Al iniciar la aplicación, hay un primer error evidente: los resultados (total recorrido y número del galgo ganador) son mostrados antes de que finalice la carrera como tal. Sin embargo, es posible que una vez corregido esto, haya más inconsistencias causadas por la presencia de condiciones de carrera.
 
-Taller.
+Parte III
 
 1.  Corrija la aplicación para que el aviso de resultados se muestre
     sólo cuando la ejecución de todos los hilos ‘galgo’ haya finalizado.
