@@ -1,6 +1,11 @@
 
 ### Escuela Colombiana de Ingeniería
 
+
+### Arquitecturas de Software – ARSW
+
+## Laboratorio Programación concurrente, condiciones de carrera, esquemas de sincronización, colecciones sincronizadas y concurrentes - Caso Dogs Race
+
 ### Integrantes:
 
 |     Nombre    |     Git         |
@@ -8,8 +13,17 @@
 | Camilo Rincón|[Rincon10](https://github.com/Rincon10 )  |
 |Galeano Garzón |[Ersocaut](https://github.com/Ersocaut)   |
 
-### Arquitecturas de Software – ARSW
-## Laboratorio Programación concurrente, condiciones de carrera, esquemas de sincronización, colecciones sincronizadas y concurrentes - Caso Dogs Race
+###  Ejecutando el proyecto
+
+#### Parte I
+```
+mvn exec:java -Dexec.mainClass="edu.eci.arsw.primefinder.Main"
+```
+
+#### Parte II
+```
+mvn exec:java -Dexec.mainClass="edu.eci.arsw.threads.MainCanodromo"
+```
 
 ### Descripción:
 Este ejercicio tiene como fin que el estudiante conozca y aplique conceptos propios de la programación concurrente.
@@ -20,9 +34,26 @@ Antes de terminar la clase.
 Creación, puesta en marcha y coordinación de hilos.
 
 1. Revise el programa “primos concurrentes” (en la carpeta parte1), dispuesto en el paquete edu.eci.arsw.primefinder. Este es un programa que calcula los números primos entre dos intervalos, distribuyendo la búsqueda de los mismos entre hilos independientes. Por ahora, tiene un único hilo de ejecución que busca los primos entre 0 y 30.000.000. Ejecútelo, abra el administrador de procesos del sistema operativo, y verifique cuantos núcleos son usados por el mismo.
+    Como se logra apreciar en las siguientes imágenes, el sistema operativo está usando los 8 núcleos lógicos disponibles que posee nuestra máquina física
+    <br>
+    <img src="img/media/admTareas.png" alt="adminTareas" width="400" height="250">
+    <br>
+    <br>
+    <img src="img/media/admTareas2.png" alt="adminTareasMultiples" width="400" height="250"> 
+
 
 2. Modifique el programa para que, en lugar de resolver el problema con un solo hilo, lo haga con tres, donde cada uno de éstos hará la tarcera parte del problema original. Verifique nuevamente el funcionamiento, y nuevamente revise el uso de los núcleos del equipo.
-
+    
+    * Tiempo de Ejecución antes de la modificación
+    
+        <img src="img/media/1Thread.png" alt="ejecucionAntes" width="400" height="250">
+    
+    * Modificacion del programa:
+        <img src="img/media/modificacionP1.png" alt="modificacionP1" >
+    * Tiempo de Ejecución despues de la modificación
+    
+        <img src="img/media/3Threads.png" alt="ejecucionDespues" width="400" height="250">
+    
 3. Lo que se le ha pedido es: debe modificar la aplicación de manera que cuando hayan transcurrido 5 segundos desde que se inició la ejecución, se detengan todos los hilos y se muestre el número de primos encontrados hasta el momento. Luego, se debe esperar a que el usuario presione ENTER para reanudar la ejecución de los mismo.
 
 
@@ -72,3 +103,6 @@ Parte III
     deberían despertarse y continuar con la carrera. Diseñe una solución que permita hacer esto utilizando los mecanismos de sincronización con las primitivas de los Locks provistos por el lenguaje (wait y notifyAll).
 
 
+Referencias 
+
+* 
