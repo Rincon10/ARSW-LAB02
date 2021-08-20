@@ -107,4 +107,6 @@ Parte III
 
 Referencias 
 
-* 
+* 2021. [online] Available at: <https://javadesdecero.es/avanzado/sincronizacion-de-hilos/> [Accessed 19 August 2021].
+* Dit.upm.es. 2021. Ayuda. [online] Available at: <https://www.dit.upm.es/~pepe/libros/concurrency/index.html#!1023> [Accessed 19 August 2021].
+* Dit.upm.es. 2021. Ayuda. [online] Available at: <https://www.dit.upm.es/~pepe/libros/concurrency/index.html#!1079> [Accessed 19 August 2021].
