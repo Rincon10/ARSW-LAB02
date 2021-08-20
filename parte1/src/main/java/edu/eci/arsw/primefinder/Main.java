@@ -4,32 +4,35 @@ import java.util.ArrayList;
 
 public class Main {
 
-	public synchronized static void main(String[] args) {
-		int N = 300;
+	public synchronized static void main(String[] args) throws InterruptedException {
+		int N = 3;
 		int size = 30000000;
 		int particion = size/N;
 
 		ArrayList<PrimeFinderThread> arrayList= new ArrayList<>();
 
 		for ( int i=0; i<N; i++){
+			int b;
 			PrimeFinderThread pft;
-			if ( i == N-1 ){
-				pft=new PrimeFinderThread(i*particion, size );
-			}
-			else{
-				pft=new PrimeFinderThread(i*particion, ((i+1)*particion) - 1);
-			}
+
+			b = ( i == N-1 )? size: ((i+1)*particion) - 1;
+			pft = new PrimeFinderThread(i*particion, b );
+
 			arrayList.add(pft);
-			arrayList.get(i).start();
 		}
 
-		arrayList.forEach( t -> {
-			try {
-				t.join();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+		while(true){
+			int cont = 0;
+
+			Thread.sleep(5000);
+			for (PrimeFinderThread t : arrayList ){
+				t.detenerHilo();
+				cont+= t.getSize();
 			}
-		});
+
+			System.out.println(cont);
+			arrayList.forEach( t -> t.continuarHilo());
+		}
 	}
 	
 }
