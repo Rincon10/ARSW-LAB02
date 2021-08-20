@@ -19,11 +19,21 @@ public class PrimeFinderThread extends Thread{
 	}
 
 	public void run(){
-		for (int i=a;i<=b;i++){
-			if (isPrime(i)){
-				primes.add(i);
-				/*System.out.println(i);*/
+		try {
+			for (int i=a;i<=b;i++){
+				if (isPrime(i)){
+					primes.add(i);
+					while ( detener ){
+						synchronized ( this ){
+							wait();
+							System.out.println("me detuve");
+						}
+					}
+					/*System.out.println(i);*/
+				}
 			}
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
 	}
 	
@@ -45,7 +55,7 @@ public class PrimeFinderThread extends Thread{
 	}
 
 	public synchronized void continuarHilo(){
-		detener = false;
+		detener=false;
 		notify();
 	}
 

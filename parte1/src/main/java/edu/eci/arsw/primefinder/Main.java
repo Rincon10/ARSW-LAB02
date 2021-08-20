@@ -21,18 +21,23 @@ public class Main {
 			arrayList.add(pft);
 		}
 
-		while(true){
-			int cont = 0;
+		int cont = 0;
 
-			Thread.sleep(5000);
-			for (PrimeFinderThread t : arrayList ){
-				t.detenerHilo();
-				cont+= t.getSize();
-			}
-
-			System.out.println(cont);
-			arrayList.forEach( t -> t.continuarHilo());
+		Thread.sleep(5000);
+		for (PrimeFinderThread t : arrayList ){
+			t.detenerHilo();
+			cont+= t.getSize();
 		}
+
+		System.out.println(cont);
+		System.out.println("===================");
+		for (PrimeFinderThread t : arrayList ){
+			t.continuarHilo();
+			cont+= t.getSize();
+		};
+
+		System.out.println(cont);
+
 	}
 	
 }
