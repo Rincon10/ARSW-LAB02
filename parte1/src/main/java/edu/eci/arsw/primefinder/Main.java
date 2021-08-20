@@ -1,6 +1,7 @@
 package edu.eci.arsw.primefinder;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Main {
 
@@ -8,7 +9,34 @@ public class Main {
 		int N = 3;
 		int size = 30000000;
 		int particion = size/N;
+		Scanner sc = new Scanner(System.in);
+		ArrayList<PrimeFinderThread> arrayList;
 
+
+		arrayList = prepareThreads(N, particion, size);
+		Thread.sleep(5000);
+
+		int cont = 0;
+		for (PrimeFinderThread t : arrayList ){
+			t.detenerHilo();
+			cont+= t.getSize();
+		}
+
+		System.out.println(cont);
+		System.out.println("===================");
+		String enter = sc.nextLine();
+		System.out.println("cont");
+		cont = 0;
+
+		for ( PrimeFinderThread t : arrayList ){
+			t.continuarHilo();
+			t.join();
+			cont+= t.getSize();
+		}
+		System.out.println(cont);
+	}
+
+	public static ArrayList<PrimeFinderThread> prepareThreads(int N, int particion, int size){
 		ArrayList<PrimeFinderThread> arrayList= new ArrayList<>();
 
 		for ( int i=0; i<N; i++){
@@ -20,24 +48,6 @@ public class Main {
 
 			arrayList.add(pft);
 		}
-
-		int cont = 0;
-
-		Thread.sleep(5000);
-		for (PrimeFinderThread t : arrayList ){
-			t.detenerHilo();
-			cont+= t.getSize();
-		}
-
-		System.out.println(cont);
-		System.out.println("===================");
-		for (PrimeFinderThread t : arrayList ){
-			t.continuarHilo();
-			cont+= t.getSize();
-		};
-
-		System.out.println(cont);
-
+		return arrayList;
 	}
-	
 }

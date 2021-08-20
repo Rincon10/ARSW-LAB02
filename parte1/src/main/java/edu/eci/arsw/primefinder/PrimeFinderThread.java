@@ -26,10 +26,8 @@ public class PrimeFinderThread extends Thread{
 					while ( detener ){
 						synchronized ( this ){
 							wait();
-							System.out.println("me detuve");
 						}
 					}
-					/*System.out.println(i);*/
 				}
 			}
 		} catch (InterruptedException e) {
