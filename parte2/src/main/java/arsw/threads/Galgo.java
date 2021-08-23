@@ -67,6 +67,6 @@ public class Galgo extends Thread {
 
 	public void continuar() {
 		continuar = true;
-		synchronized ( this ) {  super.notify(); }
+		synchronized ( this ) {  super.notifyAll(); }
 	}
 }
