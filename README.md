@@ -56,8 +56,8 @@ Creación, puesta en marcha y coordinación de hilos.
         
         <img src="img/media/3Threads.png" alt="ejecucionDespues" width="400" height="250">
     
-3. Lo que se le ha pedido es: debe modificar la aplicación de manera que cuando hayan transcurrido 5 segundos desde que se inició la ejecución, se detengan todos los hilos y se muestre el número de primos encontrados hasta el momento. Luego, se debe esperar a que el usuario presione ENTER para reanudar la ejecución de los mismo.
-
+3. Lo que se le ha pedido es: debe modificar la aplicación de manera que cuando hayan transcurrido 5 segundos desde que se inició la ejecución, se detengan todos los hilos y se muestre el número de primos encontrados hasta el momento. Luego, se debe esperar a que el usuario presione ENTER para reanudar la ejecución de los mismo. <br>
+        <img src="img/media/ejecP1Mod.png" alt="ejecP1Mod" width="400" height="250">
 
 
 ### Parte II 
