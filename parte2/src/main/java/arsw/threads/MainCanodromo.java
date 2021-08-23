@@ -14,7 +14,7 @@ public class MainCanodromo {
     private static RegistroLlegada reg = new RegistroLlegada();
 
     public static void main(String[] args) {
-        can = new Canodromo(3, 100);
+        can = new Canodromo(17, 100);
         galgos = new Galgo[can.getNumCarriles()];
         can.setVisible(true);
 
@@ -39,6 +39,7 @@ public class MainCanodromo {
 
                                 }
 
+                                //Hacemos que el thread main no continuer hasta que todos los galgos terminen
                                 for (Galgo galgo:galgos) {
                                     try {
                                         galgo.join();
@@ -60,6 +61,7 @@ public class MainCanodromo {
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
+                        detenerThreads();
                         System.out.println("Carrera pausada!");
                     }
                 }
@@ -69,11 +71,30 @@ public class MainCanodromo {
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
+                        continuarThreads();
                         System.out.println("Carrera reanudada!");
                     }
                 }
         );
 
+    }
+
+    /**
+     * Metodo que se encarga en detener los threads actualmente ejecutandose
+     */
+    private static void detenerThreads() {
+        for ( Galgo galgo: galgos) {
+            galgo.detener();
+        }
+    }
+
+    /**
+     * Metodo que se encarga en poner en marcha los threads que acualmente estan en espera
+     */
+    public static void continuarThreads() {
+        for ( Galgo galgo: galgos) {
+            galgo.continuar();
+        }
     }
 
 }

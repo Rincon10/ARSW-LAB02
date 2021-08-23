@@ -8,22 +8,26 @@ package arsw.threads;
  */
 public class Galgo extends Thread {
 	private int paso;
+	private boolean continuar;
 	private Carril carril;
 	RegistroLlegada regl;
 
 	public Galgo(Carril carril, String name, RegistroLlegada reg) {
 		super(name);
 		this.carril = carril;
-		paso = 0;
 		this.regl=reg;
+		continuar=true;
+		paso = 0;
 	}
 
 	public void corra() throws InterruptedException {
-		while (paso < carril.size()) {			
+		while (paso < carril.size()) {
+
+
 			Thread.sleep(100);
 			carril.setPasoOn(paso++);
 			carril.displayPasos(paso);
-			if (paso == carril.size()) {						
+			if (paso == carril.size()) {
 				carril.finish();
 				int ubicacion=regl.getUltimaPosicionAlcanzada();
 				regl.setUltimaPosicionAlcanzada(ubicacion+1);
@@ -31,7 +35,12 @@ public class Galgo extends Thread {
 				if (ubicacion==1){
 					regl.setGanador(this.getName());
 				}
-				
+			}
+			// Region critica
+			synchronized ( this ){
+				while ( !continuar ){
+					wait();
+				}
 			}
 		}
 	}
@@ -48,4 +57,12 @@ public class Galgo extends Thread {
 
 	}
 
+	public void detener(){
+		continuar = false;
+	}
+
+	public void continuar() {
+		continuar = true;
+		synchronized ( this ) {  super.notify(); }
+	}
 }
