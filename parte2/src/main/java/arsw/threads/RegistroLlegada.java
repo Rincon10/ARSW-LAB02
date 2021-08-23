@@ -14,11 +14,11 @@ public class RegistroLlegada {
 		this.ganador = ganador;
 	}
 
-	public int getUltimaPosicionAlcanzada() {
+	public synchronized int getUltimaPosicionAlcanzada() {
 		return ultimaPosicionAlcanzada;
 	}
 
-	public void setUltimaPosicionAlcanzada(int ultimaPosicionAlcanzada) {
+	public synchronized void setUltimaPosicionAlcanzada(int ultimaPosicionAlcanzada) {
 		this.ultimaPosicionAlcanzada = ultimaPosicionAlcanzada;
 	}
 

@@ -29,12 +29,16 @@ public class Galgo extends Thread {
 			carril.displayPasos(paso);
 			if (paso == carril.size()) {
 				carril.finish();
-				int ubicacion=regl.getUltimaPosicionAlcanzada();
-				regl.setUltimaPosicionAlcanzada(ubicacion+1);
-				System.out.println("El galgo "+this.getName()+" llego en la posicion "+ubicacion);
-				if (ubicacion==1){
-					regl.setGanador(this.getName());
+
+				synchronized ( regl ){
+					int ubicacion=regl.getUltimaPosicionAlcanzada();
+					regl.setUltimaPosicionAlcanzada(ubicacion+1);
+					System.out.println("El galgo "+this.getName()+" llego en la posicion "+ubicacion);
+					if (ubicacion==1){
+						regl.setGanador(this.getName());
+					}
 				}
+
 			}
 			// Region critica
 			synchronized ( this ){
