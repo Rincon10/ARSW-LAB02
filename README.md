@@ -109,3 +109,4 @@ Referencias
 
 * Sincronizacion de hilos [online] Available at: <https://javadesdecero.es/avanzado/sincronizacion-de-hilos/> [Accessed 19 August 2021].
 * Concurrencia. [online] Available at: <https://www.dit.upm.es/~pepe/libros/concurrency/index.html#!1023> [Accessed 19 August 2021].
+* Explicacion de synchronize. [online] Available at: <https://www.dlsi.ua.es/asignaturas/pc/teoria/t05.pdf> [Accessed 23 August 2021].
