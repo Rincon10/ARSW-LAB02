@@ -22,18 +22,19 @@ public class Main {
 			cont+= t.getSize();
 		}
 
-		System.out.println(cont);
-		System.out.println("===================");
+		System.out.println("Deteniendo threads....");
+		System.out.println("Se han encontrado " + cont + " numeros primos.");
+		System.out.println("============================================== \n presiona ENTER");
 		String enter = sc.nextLine();
-		System.out.println("cont");
-		cont = 0;
 
+		cont = 0;
 		for ( PrimeFinderThread t : arrayList ){
 			t.continuarHilo();
 			t.join();
 			cont+= t.getSize();
 		}
-		System.out.println(cont);
+		System.out.println("Continuando threads....");
+		System.out.println("Se han encontrado " + cont + " numeros primos.");
 	}
 
 	public static ArrayList<PrimeFinderThread> prepareThreads(int N, int particion, int size){
