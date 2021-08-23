@@ -7,6 +7,7 @@ package arsw.threads;
  * 
  */
 public class Galgo extends Thread {
+	private Boolean isPaused = false;
 	private int paso;
 	private Carril carril;
 	RegistroLlegada regl;
@@ -18,34 +19,44 @@ public class Galgo extends Thread {
 		this.regl=reg;
 	}
 
-	public synchronized void corra() throws InterruptedException {
+	public void corra() throws InterruptedException {
 		while (paso < carril.size()) {			
 			Thread.sleep(100);
 			carril.setPasoOn(paso++);
 			carril.displayPasos(paso);
-			
-			if (paso == carril.size()) {						
-				carril.finish();
-				int ubicacion = regl.getUltimaPosicionAlcanzada();
-				regl.setUltimaPosicionAlcanzada(ubicacion+1);
-				System.out.println("El galgo "+this.getName()+" llego en la posicion "+ubicacion);
-				if (ubicacion == 1){
-					regl.setGanador(this.getName());
+			synchronized (this){
+				while(isPaused){
+					wait();
 				}
-				
+			}
+			if (paso == carril.size()) {
+				synchronized (regl){
+					carril.finish();
+					int ubicacion = regl.getUltimaPosicionAlcanzada();
+					regl.setUltimaPosicionAlcanzada(ubicacion+1);
+					System.out.println("El galgo "+this.getName()+" llego en la posicion "+ubicacion);
+					if (ubicacion == 1){
+						regl.setGanador(this.getName());
+					}
+				}
 			}
 		}
 	}
 
+	public synchronized void reanudar(){
+		isPaused = false;
+		notifyAll();
+	}
+
+	public synchronized void pause(){
+		isPaused = true;
+	}
 
 	@Override
 	public void run() {
-		
 		try {
 			corra();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		} catch (InterruptedException e) { }
 
 	}
 
