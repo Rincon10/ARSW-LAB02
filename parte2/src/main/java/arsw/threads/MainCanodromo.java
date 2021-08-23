@@ -30,20 +30,22 @@ public class MainCanodromo {
                         //bloquear la interfaz gráfica.
                         ((JButton) e.getSource()).setEnabled(false);
                         new Thread() {
-                            public void run() {
+                            public synchronized void run() {
                                 for (int i = 0; i < can.getNumCarriles(); i++) {
                                     //crea los hilos 'galgos'
                                     galgos[i] = new Galgo(can.getCarril(i), "" + i, reg);
                                     //inicia los hilos
                                     galgos[i].start();
-
                                 }
-                               
-				can.winnerDialog(reg.getGanador(),reg.getUltimaPosicionAlcanzada() - 1); 
+                                for (Galgo g : galgos){
+                                    try {
+                                        g.join();
+                                    } catch (InterruptedException ex) { }
+                                }
+                                can.winnerDialog(reg.getGanador(),reg.getUltimaPosicionAlcanzada() - 1);
                                 System.out.println("El ganador fue:" + reg.getGanador());
                             }
                         }.start();
-
                     }
                 }
         );
