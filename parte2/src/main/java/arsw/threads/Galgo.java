@@ -23,7 +23,6 @@ public class Galgo extends Thread {
 			Thread.sleep(100);
 			carril.setPasoOn(paso++);
 			carril.displayPasos(paso);
-			
 			if (paso == carril.size()) {						
 				carril.finish();
 				int ubicacion=regl.getUltimaPosicionAlcanzada();

@@ -14,7 +14,7 @@ public class MainCanodromo {
     private static RegistroLlegada reg = new RegistroLlegada();
 
     public static void main(String[] args) {
-        can = new Canodromo(17, 100);
+        can = new Canodromo(3, 100);
         galgos = new Galgo[can.getNumCarriles()];
         can.setVisible(true);
 
@@ -37,6 +37,14 @@ public class MainCanodromo {
                                     //inicia los hilos
                                     galgos[i].start();
 
+                                }
+
+                                for (Galgo galgo:galgos) {
+                                    try {
+                                        galgo.join();
+                                    } catch (InterruptedException interruptedException) {
+                                        interruptedException.printStackTrace();
+                                    }
                                 }
                                
 				can.winnerDialog(reg.getGanador(),reg.getUltimaPosicionAlcanzada() - 1); 
