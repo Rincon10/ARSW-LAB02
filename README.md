@@ -87,6 +87,21 @@ Parte III
     a.  La acción de iniciar la carrera y mostrar los resultados se realiza a partir de la línea 38 de MainCanodromo.
 
     b.  Puede utilizarse el método join() de la clase Thread para sincronizar el hilo que inicia la carrera, con la finalización de los hilos de los galgos.
+    
+    * El mensaje no salta al inicio de la carrera
+    <br>
+    <img src="img/media/ParteIII.A.1.png" alt="modificacionP3.1" >
+    <br>
+    
+    * El mensaje sale únicamente al final de la carrera
+    <br>
+    <img src="img/media/ParteIII.A.2.png" alt="modificacionP3.2" >
+    <br>
+    
+    * El ouput se genera después de Aceptar el mensaje anterior
+    <br>
+    <img src="img/media/ParteIII.A.3.png" alt="modificacionP3.3" >
+    <br>
 
 2.  Una vez corregido el problema inicial, corra la aplicación varias
     veces, e identifique las inconsistencias en los resultados de las
@@ -94,16 +109,127 @@ Parte III
     podrían salir resultados válidos, pero en otros se pueden presentar
     dichas inconsistencias). A partir de esto, identifique las regiones
     críticas () del programa.
+    
+    * Las inconsistncias encontradas son dos principalmente, el orden del output no presenta ningun orden aparente y varios galgos pueden ocupar la misma posición, dejando posiciones sin ocupar.
+    <br>
+    <img src="img/media/InconsistenciaA.png" alt="modificacionInconsistenciaA" >
+    <img src="img/media/InconsistenciaB.png" alt="modificacionInconsistenciaB" >
+    <br>
 
 3.  Utilice un mecanismo de sincronización para garantizar que a dichas
     regiones críticas sólo acceda un hilo a la vez. Verifique los
     resultados.
 
+    * Realizando el siguiente cambio dentro del código de la clase Galgo solventamos las incosistencias encontradas:
+    
+    ```
+    synchronized (regl){
+	    carril.finish();
+		int ubicacion = regl.getUltimaPosicionAlcanzada();
+		regl.setUltimaPosicionAlcanzada(ubicacion+1);
+		System.out.println("El galgo "+this.getName()+" llego en la posicion "+ubicacion);
+		if (ubicacion == 1){
+	        regl.setGanador(this.getName());
+		}
+	}
+     ```
+    Resultando en el siguiente output correcto:
+    
+    <br>
+    <img src="img/media/SolucionInconsistencia.png" alt="modificacionSolucionInconsistencia" >
+    <br>
+
 4.  Implemente las funcionalidades de pausa y continuar. Con estas,
     cuando se haga clic en ‘Stop’, todos los hilos de los galgos
     deberían dormirse, y cuando se haga clic en ‘Continue’ los mismos
     deberían despertarse y continuar con la carrera. Diseñe una solución que permita hacer esto utilizando los mecanismos de sincronización con las primitivas de los Locks provistos por el lenguaje (wait y notifyAll).
+    
+    Para poder solventar los problemas encontrados en las opciones de 'Stop' y 'Continue' es necesario realizar cambios en la clase Galgo y MainCanodromo:
 
+    * Los cambios en la clase Galgo se pueden resumir en:
+        
+        * Añadimos un nuevo atributo booleano isPaused.
+        * Añadimos un bloque while con wait(); dentro del método corra para generar la pausa que se regira por el nueco atributo.
+        * Añadimos los métodos reanudar(); y pause(); que generan el cambio en el nuevo atributo.
+    
+    ```
+    public class Galgo extends Thread {
+    	private Boolean isPaused = false;
+        .
+        .
+        .
+        public void corra() throws InterruptedException {
+            .
+            .
+            .
+            synchronized (this){
+				while(isPaused){
+					wait();
+				}
+			}
+            .
+            .
+            .
+        }
+        public synchronized void reanudar(){
+		    isPaused = false;
+		    notifyAll();
+	    }
+
+	    public synchronized void pause(){
+		    isPaused = true;
+	    }
+    }
+    ```
+    * Los cambios en la clase MainCanodromo son:
+
+        * Modificamos las acciones realizadas por el botón Stop por medio del método can.setStopAction();
+        * Modificamos las acciones realizadas por el botón Continue por medio del método can.setContinueAction();
+    
+    ```
+    public class MainCanodromo {
+    .
+    .
+    .
+        public static void main(String[] args) {
+            .
+            .
+            .
+            can.setStopAction(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        for (Galgo g : galgos){
+                            g.pause();
+                        }
+                        System.out.println("Carrera pausada!");
+                    }
+                }
+            );
+
+            can.setContinueAction(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        for (Galgo g : galgos){
+                            g.reanudar();
+                        }
+                        System.out.println("Carrera reanudada!");
+                    }
+                }
+            );
+        }
+    }
+    ```
+    * Generando ya el comportamiento deseado de los botones y acciones 'Stop' y 'Continue':
+    * Generamos que la carrera se detenga en un par de ocasiones y luego la reanudamos:
+    <br>
+    <img src="img/media/Pausa1.png" alt="modificacionPausa1">
+    <br>
+    * Dejamos que la carrera termine luego de haberla pausado:
+    <br>
+    <img src="img/media/Pausa2.png" alt="modificacionPausa2">
+    <br>
 
 Referencias 
 
